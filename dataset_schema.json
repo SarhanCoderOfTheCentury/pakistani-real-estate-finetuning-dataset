@@ -1,0 +1,653 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/pakistani-real-estate-extraction-v1.0.json",
+  "title": "Pakistani Real Estate Extraction Output v1.0",
+  "description": "SFT assistant JSON response schema (synthetic, not verified listings)",
+  "type": "object",
+  "properties": {
+    "task": {
+      "const": "pakistani_property_listing_extraction"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "extraction_status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient"
+      ]
+    },
+    "input_language": {
+      "type": "string",
+      "enum": [
+        "english",
+        "roman_urdu",
+        "urdu_script",
+        "mixed",
+        "other",
+        "unknown"
+      ]
+    },
+    "property": {
+      "type": "object",
+      "properties": {
+        "listing_type": {
+          "type": "string",
+          "enum": [
+            "sale",
+            "rent",
+            "lease",
+            "unknown"
+          ]
+        },
+        "property_type": {
+          "type": "string",
+          "enum": [
+            "house",
+            "flat_apartment",
+            "portion",
+            "plot",
+            "shop",
+            "office",
+            "warehouse",
+            "industrial_property",
+            "agricultural_land",
+            "farmhouse",
+            "building",
+            "other",
+            "unknown"
+          ]
+        },
+        "property_subtype": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "property_use": {
+          "type": "string",
+          "enum": [
+            "residential",
+            "commercial",
+            "industrial",
+            "agricultural",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "country": {
+              "type": "string",
+              "enum": [
+                "Pakistan"
+              ]
+            },
+            "province_or_territory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "city": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "district": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "locality": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "housing_scheme_or_project": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "phase": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "block_or_sector": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "street_or_plot_number": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "nearby_landmark": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_location_text": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "country",
+            "province_or_territory",
+            "city",
+            "district",
+            "locality",
+            "housing_scheme_or_project",
+            "phase",
+            "block_or_sector",
+            "street_or_plot_number",
+            "nearby_landmark",
+            "raw_location_text"
+          ],
+          "additionalProperties": false
+        },
+        "area_measurements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "plot_area",
+                  "covered_area",
+                  "built_up_area",
+                  "land_area",
+                  "unit_area",
+                  "unknown"
+                ]
+              },
+              "value": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "marla",
+                  "kanal",
+                  "sq_ft",
+                  "sq_yd",
+                  "gaz",
+                  "acre",
+                  "hectare",
+                  "unknown"
+                ]
+              },
+              "raw_text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value",
+              "unit",
+              "raw_text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "price": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "min_amount": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "max_amount": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "currency": {
+              "type": "string",
+              "enum": [
+                "PKR",
+                "other",
+                "unknown"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "enum": [
+                "total_sale_price",
+                "monthly_rent",
+                "yearly_rent",
+                "per_marla",
+                "per_kanal",
+                "per_sq_ft",
+                "token_money",
+                "advance_rent",
+                "security_deposit",
+                "unknown"
+              ]
+            },
+            "qualifier": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "approximate",
+                "starting_from",
+                "up_to",
+                "range",
+                "unknown"
+              ]
+            },
+            "negotiable": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_text": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "amount",
+            "min_amount",
+            "max_amount",
+            "currency",
+            "basis",
+            "qualifier",
+            "negotiable",
+            "raw_text"
+          ],
+          "additionalProperties": false
+        },
+        "additional_charges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "security_deposit",
+                  "advance_rent",
+                  "token_money",
+                  "maintenance_fee",
+                  "commission",
+                  "other"
+                ]
+              },
+              "amount": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "currency": {
+                "type": "string",
+                "enum": [
+                  "PKR",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "raw_text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "amount",
+              "currency",
+              "raw_text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "building_details": {
+          "type": "object",
+          "properties": {
+            "bedrooms": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "bathrooms": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "kitchens": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "living_rooms": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "floor_number": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "total_floors": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "parking_spaces": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "furnishing": {
+              "type": "string",
+              "enum": [
+                "furnished",
+                "semi_furnished",
+                "unfurnished",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "bedrooms",
+            "bathrooms",
+            "kitchens",
+            "living_rooms",
+            "floor_number",
+            "total_floors",
+            "parking_spaces",
+            "furnishing"
+          ],
+          "additionalProperties": false
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "utilities": {
+          "type": "object",
+          "properties": {
+            "electricity": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "gas": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "water": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "sewerage": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "electricity",
+            "gas",
+            "water",
+            "sewerage"
+          ],
+          "additionalProperties": false
+        },
+        "possession_status": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "under_construction",
+            "file_only",
+            "not_stated",
+            "unclear"
+          ]
+        },
+        "document_terms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "availability_status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "sold",
+            "reserved",
+            "rented",
+            "not_stated",
+            "unclear"
+          ]
+        },
+        "additional_details": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "listing_type",
+        "property_type",
+        "property_subtype",
+        "property_use",
+        "location",
+        "area_measurements",
+        "price",
+        "additional_charges",
+        "building_details",
+        "features",
+        "utilities",
+        "possession_status",
+        "document_terms",
+        "availability_status",
+        "additional_details"
+      ],
+      "additionalProperties": false
+    },
+    "ambiguities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "task",
+    "schema_version",
+    "extraction_status",
+    "input_language",
+    "property",
+    "ambiguities"
+  ],
+  "additionalProperties": false
+}
